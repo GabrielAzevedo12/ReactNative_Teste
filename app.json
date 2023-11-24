@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AwesomeProject",
-    "slug": "AwesomeProject",
+    "name": "ReactNative_Teste",
+    "slug": "ReactNative_Teste",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,7 +28,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "a1220cdd-4001-44fb-b0e3-25f62f4de516"
+        "projectId": "d926ac90-56da-4c91-a588-44a72ce46e60"
       }
     }
   }
