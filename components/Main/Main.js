@@ -8,7 +8,10 @@ import {
 } from "react-native";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { useRef, useLayoutEffect, useState } from "react";
+import { useRef, useLayoutEffect, useState, React } from "react";
+import { LottieView } from "lottie-react-native";
+import { Animated } from "react-native-web";
+//import Animation from "../../assets/animation.json";
 
 var display_header = "none",
   scrollOld,
@@ -33,7 +36,29 @@ export default function Main() {
       } else {
         return valorDecrementado - valorDecrementando;
       }
-    };
+    },
+    ScrollMain_onScroll = (e) => {
+      if (scrollOld >= e.scrollHeight - e.scrollTop) {
+        //setHeaderHeight(DecrementoHeight(dataHeaderHeight, 2));
+        //setFooterHeight(IncrementoHeight(dataFooterHeight, 2));
+        //setDataHeader({ height: dataHeaderHeight + "%" });
+        //setDataFooter({ height: dataFooterHeight + "%" });
+        //setDataFooter({width: ""});
+        setDataHeader({ display: "none" });
+        setDataFooter({ display: "" });
+      } else {
+        //setFooterHeight(DecrementoHeight(dataFooterHeight, 2));
+        //setHeaderHeight(IncrementoHeight(dataHeaderHeight, 2));
+        //setDataHeader({ height: dataHeaderHeight + "%" });
+        //setDataFooter({ height: dataFooterHeight + "%" });
+        //setDataHeader({width: ""});
+        //setDataFooter({width: "none"});
+        setDataHeader({ display: "" });
+        setDataFooter({ display: "none" });
+      }
+      scrollOld = e.scrollHeight - e.scrollTop;
+    },
+    scrollYAnimated = useRef(new Animated.Value(0)).current;
 
   return (
     <View style={styles.container}>
@@ -44,96 +69,13 @@ export default function Main() {
           console.log(e.target);
         }}
         onScroll={(e) => {
-          //console.log(e.target.ScrollY);
-          //console.log(document.querySelector("#ScrollMain"));
-          if (
-            scrollOld >=
-            document.querySelector("#ScrollMain").scrollHeight -
-              document.querySelector("#ScrollMain").scrollTop
-          ) {
-            //setHeaderHeight(DecrementoHeight(dataHeaderHeight, 2));
-            //setFooterHeight(IncrementoHeight(dataFooterHeight, 2));
-            //setDataHeader({ height: dataHeaderHeight + "%" });
-            //setDataFooter({ height: dataFooterHeight + "%" });
-            //setDataFooter({width: ""});
-            setDataHeader({ display: "none" });
-            setDataFooter({ display: "" });
-          } else {
-            //setFooterHeight(DecrementoHeight(dataFooterHeight, 2));
-            //setHeaderHeight(IncrementoHeight(dataHeaderHeight, 2));
-            //setDataHeader({ height: dataHeaderHeight + "%" });
-            //setDataFooter({ height: dataFooterHeight + "%" });
-            //setDataHeader({width: ""});
-            //setDataFooter({width: "none"});
-            setDataHeader({ display: "" });
-            setDataFooter({ display: "none" });
-          }
-          scrollOld =
-            document.querySelector("#ScrollMain").scrollHeight -
-            document.querySelector("#ScrollMain").scrollTop;
-          //alert(display_header)
+          ScrollMain_onScroll(document.querySelector("#ScrollMain"));
         }}
         onScrollEndDrag={(e) => {
-          //console.log(e.target.ScrollY);
-          //console.log(document.querySelector("#ScrollMain"));
-          if (
-            scrollOld >=
-            document.querySelector("#ScrollMain").scrollHeight -
-              document.querySelector("#ScrollMain").scrollTop
-          ) {
-            //DecrementoHeight(HeightHeader, valorIncremento)
-            //IncrementeHeight(HeightHeader)
-            //setHeaderHeight(DecrementoHeight(dataHeaderHeight, 2));
-            //setFooterHeight(IncrementoHeight(dataFooterHeight, 2));
-            //setDataHeader({ height: dataHeaderHeight + "%" });
-            //setDataFooter({ height: dataFooterHeight + "%" });
-            //setDataFooter({width: ""});
-            setDataHeader({ display: "none" });
-            setDataFooter({ display: "" });
-          } else {
-            //setFooterHeight(DecrementoHeight(dataFooterHeight, 2));
-            //setHeaderHeight(IncrementoHeight(dataHeaderHeight, 2));
-            //setDataHeader({ height: dataHeaderHeight + "%" });
-            //setDataFooter({ height: dataFooterHeight + "%" });
-            //setDataHeader({width: ""});
-            //setDataFooter({width: "none"});
-            setDataHeader({ display: "" });
-            setDataFooter({ display: "none" });
-          }
-          scrollOld =
-            document.querySelector("#ScrollMain").scrollHeight -
-            document.querySelector("#ScrollMain").scrollTop;
-          //alert(display_header)
+          ScrollMain_onScroll(document.querySelector("#ScrollMain"));
         }}
         onScrollBeginDrag={(e) => {
-          //console.log(e.target.ScrollY);
-          //console.log(document.querySelector("#ScrollMain"));
-          if (
-            scrollOld >=
-            document.querySelector("#ScrollMain").scrollHeight -
-              document.querySelector("#ScrollMain").scrollTop
-          ) {
-            //setHeaderHeight(DecrementoHeight(dataHeaderHeight, 2));
-            //setFooterHeight(IncrementoHeight(dataFooterHeight, 2));
-            //setDataHeader({ height: dataHeaderHeight + "%" });
-            //setDataFooter({ height: dataFooterHeight + "%" });
-            //setDataFooter({width: ""});
-            setDataHeader({ display: "none" });
-            setDataFooter({ display: "" });
-          } else {
-            //setFooterHeight(DecrementoHeight(dataFooterHeight, 2));
-            //setHeaderHeight(IncrementoHeight(dataHeaderHeight, 2));
-            //setDataHeader({ height: dataHeaderHeight + "%" });
-            //setDataFooter({ height: dataFooterHeight + "%" });
-            //setDataHeader({width: ""});
-            //setDataFooter({width: "none"});
-            setDataHeader({ display: "" });
-            setDataFooter({ display: "none" });
-          }
-          scrollOld =
-            document.querySelector("#ScrollMain").scrollHeight -
-            document.querySelector("#ScrollMain").scrollTop;
-          //alert(display_header)
+          ScrollMain_onScroll(document.querySelector("#ScrollMain"));
         }}
       >
         <TouchableHighlight>
@@ -143,6 +85,12 @@ export default function Main() {
             <Text style={styles.text_main}>This is main</Text>
             <Text style={styles.text_main}>This is main</Text>
             <Text style={styles.text_main}>This is main</Text>
+            <Animated.FlatList
+              data={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollYAnimated } } }],
+                { useNativeDriver: true },
+              )}
+            />
           </View>
         </TouchableHighlight>
       </ScrollView>
@@ -157,6 +105,14 @@ export default function Main() {
           } else {
             alert("Não Existe");
           }
+
+  <LottieView
+              ref={animationRef}
+              style={StyleSheet.absoluteFillObject}
+              resizeMode="cover"
+              autoPlay={language !== ""}
+            />         
+          
  */
 const styles = StyleSheet.create({
   main: {
