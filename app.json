@@ -25,7 +25,16 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "bundler": "metro"
+      "bundler": "metro",
+      "build": {
+        "babel": {
+          "include": [
+            "@ui-kitten/components",
+            "@ui-kitten/eva-icons",
+            "@aws-amplify/ui-react-native"
+          ]
+        }
+      }
     },
     "extra": {
       "eas": {
