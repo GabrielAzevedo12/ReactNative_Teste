@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, Image } from "react-native";
 
 export default function Footer({ transferDataFooter }) {
   return (
-    <View style={[styles.footer, transferDataFooter]}>
+    <View style={[styles.footer, transferDataFooter || ""]}>
       <Text style={styles.text_footer}>This is footer</Text>
     </View>
   );
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     //height: "10%",
     width: "100%",
+    position: "fixed"
   },
   text_footer: {
     margin: 24,
